@@ -1,0 +1,16 @@
+services:
+  db:
+    image: mysql:8.4
+    container_name: pet-care-mysql
+    ports:
+      - "3312:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: pet_care_note
+      MYSQL_USER: petcare
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - pet-care-mysql-data:/var/lib/mysql
+
+volumes:
+  pet-care-mysql-data:
