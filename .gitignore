@@ -1,0 +1,13 @@
+
+# 環境変数・秘密情報
+.env
+.env.*
+!.env.example
+
+# ローカルデータベース
+*.mv.db
+*.trace.db
+
+# OS・エディター
+.DS_Store
+Thumbs.db
