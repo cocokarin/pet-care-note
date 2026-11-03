@@ -1,6 +1,30 @@
 import "./App.css";
+import { useState } from "react";
+import PetFormPage from "./pages/PetFormPage";
+import PetRecordPage from "./pages/PetRecordPage";
+import RecordFormPage from "./pages/RecordFormPage";
 
 function App() {
+  const [currentPage, setCurrentPage] = useState("login");
+
+  if (currentPage === "home") {
+    return (
+      <PetRecordPage
+        onLogout={() => setCurrentPage("login")}
+        onEditPet={() => setCurrentPage("petForm")}
+        onAddRecord={() => setCurrentPage("recordForm")}
+      />
+    );
+  }
+
+  if (currentPage === "recordForm") {
+    return <RecordFormPage onCancel={() => setCurrentPage("home")} />;
+  }
+
+  if (currentPage === "petForm") {
+    return <PetFormPage onCancel={() => setCurrentPage("home")} />;
+  }
+
   return (
     <div>
       <h1>ペットケアノート</h1>
@@ -18,7 +42,9 @@ function App() {
           <input id="password" type="password" />
         </div>
 
-        <button type="button">ログイン</button>
+        <button type="button" onClick={() => setCurrentPage("home")}>
+          ログイン
+        </button>
       </form>
     </div>
   );
