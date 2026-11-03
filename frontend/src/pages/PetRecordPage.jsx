@@ -1,4 +1,17 @@
+import { useEffect, useState } from "react";
+
 function PetRecordPage({ onLogout, onEditPet, onAddRecord }) {
+  const [pet, setPet] = useState(null);
+
+  useEffect(() => {
+    async function fetchPets() {
+      const response = await fetch("/api/pets");
+      const data = await response.json();
+      setPet(data[0] ?? null);
+    }
+    fetchPets();
+  }, []);
+
   return (
     <div>
       <h1>ペットケアノート</h1>
@@ -8,9 +21,9 @@ function PetRecordPage({ onLogout, onEditPet, onAddRecord }) {
       </button>
       <section>
         <h3>ペット基本情報</h3>
-        <p>名前：</p>
-        <p>種類：</p>
-        <p>生年月日：</p>
+        <p>名前：{pet ? pet.name : "未登録"}</p>
+        <p>種類：{pet ? pet.species : "未登録"}</p>
+        <p>生年月日：{pet ? pet.birthday : "未登録"}</p>
         <button type="button" onClick={onEditPet}>
           ペット情報を編集する
         </button>
