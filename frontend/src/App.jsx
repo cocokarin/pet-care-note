@@ -6,6 +6,24 @@ import RecordFormPage from "./pages/RecordFormPage";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("login");
+  const [loginId, setLoginId] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function handleLogin() {
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ loginId, password }),
+    });
+
+    if (response.ok) {
+      setCurrentPage("home");
+    } else {
+      alert("ログインに失敗しました");
+    }
+  }
 
   if (currentPage === "home") {
     return (
@@ -34,15 +52,25 @@ function App() {
       <form>
         <div>
           <label htmlFor="loginId">ログインID</label>
-          <input id="loginId" type="text" />
+          <input
+            id="loginId"
+            type="text"
+            value={loginId}
+            onChange={(e) => setLoginId(e.target.value)}
+          />
         </div>
 
         <div>
           <label htmlFor="password">パスワード</label>
-          <input id="password" type="password" />
+          <input
+            id="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
 
-        <button type="button" onClick={() => setCurrentPage("home")}>
+        <button type="button" onClick={handleLogin}>
           ログイン
         </button>
       </form>
