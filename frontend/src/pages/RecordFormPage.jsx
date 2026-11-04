@@ -1,27 +1,24 @@
 import { useState } from "react";
 
-function RecordFormPage({ onCancel }) {
-  const [date, setDate] = useState("");
-  const [category, setCategory] = useState("");
-  const [content, setContent] = useState("");
-  const [memo, setMemo] = useState("");
+function RecordFormPage({ onCancel, editingRecord = null }) {
+  const [date, setDate] = useState(editingRecord?.date ?? "");
+  const [category, setCategory] = useState(editingRecord?.category ?? "");
+  const [content, setContent] = useState(editingRecord?.content ?? "");
+  const [memo, setMemo] = useState(editingRecord?.memo ?? "");
 
   async function handleSave() {
     if (!date || !category || !content.trim()) {
       alert("日付・種類・内容を入力してください");
       return;
     }
-    const response = await fetch("/api/pets/1/records", {
-      method: "Post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        date,
-        category,
-        content,
-        memo,
-      }),
+    const url = editingRecord
+      ? `/api/pets/1/records/${editingRecord.recordId}`
+      : "/api/pets/1/records";
+
+    const response = await fetch(url, {
+      method: editingRecord ? "PUT" : "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ date, category, content, memo }),
     });
 
     if (response.ok) {

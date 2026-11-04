@@ -8,6 +8,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState("login");
   const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
+  const [editingRecord, setEditingRecord] = useState(null);
 
   async function handleLogin() {
     const response = await fetch("/api/auth/login", {
@@ -45,12 +46,21 @@ function App() {
         onLogout={handleLogout}
         onEditPet={() => setCurrentPage("petForm")}
         onAddRecord={() => setCurrentPage("recordForm")}
+        onEditRecord={(record) => {
+          setEditingRecord(record);
+          setCurrentPage("recordForm");
+        }}
       />
     );
   }
 
   if (currentPage === "recordForm") {
-    return <RecordFormPage onCancel={() => setCurrentPage("home")} />;
+    return (
+      <RecordFormPage
+        onCancel={() => setCurrentPage("home")}
+        editingRecord={editingRecord}
+      />
+    );
   }
 
   if (currentPage === "petForm") {
@@ -58,10 +68,9 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="login-page">
       <h1>ペットケアノート</h1>
-      <p>Pet Life</p>
-      <h2>ログイン</h2>
+      <p className="login-subtitle">Pet Life</p>
 
       <form>
         <div>
