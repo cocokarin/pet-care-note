@@ -2,15 +2,45 @@ import { useEffect, useState } from "react";
 
 function PetRecordPage({ onLogout, onEditPet, onAddRecord }) {
   const [pet, setPet] = useState(null);
+  const [records, setRecords] = useState([]);
 
   useEffect(() => {
     async function fetchPets() {
       const response = await fetch("/api/pets");
       const data = await response.json();
       setPet(data[0] ?? null);
+
+      if (data[0]) {
+        const recordsResponse = await fetch(
+          `/api/pets/${data[0].petId}/records`,
+        );
+        if (recordsResponse.ok) {
+          const recordsData = await recordsResponse.json();
+          setRecords(recordsData);
+        }
+      }
     }
     fetchPets();
   }, []);
+
+  async function handleDelete(recordId) {
+    const confirmed = window.confirm("この記録を削除しますか？");
+
+    if (!confirmed) {
+      return;
+    }
+
+    const response = await fetch(`api/pets/${pet.petId}/records/${recordId}`, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      setRecords(records.filter((record) => record.recordId !== recordId));
+      alert("記録を削除しました");
+    } else {
+      alert("記録の削除に失敗しました");
+    }
+  }
 
   return (
     <div>
@@ -44,15 +74,22 @@ function PetRecordPage({ onLogout, onEditPet, onAddRecord }) {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>2026-11-02</td>
-              <td>健康</td>
-              <td>元気に散歩し、食欲もあった。</td>
-              <td>
-                <button type="button">編集</button>
-                <button type="button">削除</button>
-              </td>
-            </tr>
+            {records.map((record) => (
+              <tr key={record.recordId}>
+                <td>{record.date}</td>
+                <td>{record.category}</td>
+                <td>{record.content}</td>
+                <td>
+                  <button type="button">編集</button>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(record.recordId)}
+                  >
+                    削除
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </section>
