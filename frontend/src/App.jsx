@@ -25,10 +25,24 @@ function App() {
     }
   }
 
+  async function handleLogout() {
+    const response = await fetch("/api/auth/logout", {
+      method: "POST",
+    });
+
+    if (response.ok) {
+      setCurrentPage("login");
+      setLoginId("");
+      setPassword("");
+    } else {
+      alert("ログアウトに失敗しました");
+    }
+  }
+
   if (currentPage === "home") {
     return (
       <PetRecordPage
-        onLogout={() => setCurrentPage("login")}
+        onLogout={handleLogout}
         onEditPet={() => setCurrentPage("petForm")}
         onAddRecord={() => setCurrentPage("recordForm")}
       />
