@@ -31,52 +31,58 @@ function PetFormPage({ onCancel, editingPet = null }) {
 
   return (
     <div className="pet-form-page">
-      <h1>ペット情報の登録・編集</h1>
-      <p>ペットの基本情報を入力する画面です。</p>
-      <div className="pet-form-box">
+      <header className="pet-form-header">
+        <h1>ペットケアノート</h1>
+      </header>
+
+      <main className="pet-form-content">
+        <h2>ペット情報の登録・編集</h2>
+        <p>ペットの基本情報を入力する画面です。</p>
+        <div className="pet-form-box">
+          <div>
+            <label htmlFor="petName">ペット名（必須）</label>
+            <input
+              id="petName"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="species">種類（必須）</label>
+            <select
+              id="species"
+              value={species}
+              onChange={(e) => setSpecies(e.target.value)}
+              required
+            >
+              <option value="">選択してください</option>
+              <option value="犬">犬</option>
+              <option value="猫">猫</option>
+              <option value="その他">その他</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="birthday">生年月日（任意）</label>
+            <input
+              id="birthday"
+              type="date"
+              value={birthday}
+              onChange={(e) => setBirthday(e.target.value)}
+            />
+          </div>
+        </div>{" "}
+        {/* pet-form-box を閉じる */}
         <div>
-          <label htmlFor="petName">ペット名（必須）</label>
-          <input
-            id="petName"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+          <button type="button" onClick={handleSave}>
+            保存
+          </button>
+          <button type="button" onClick={onCancel}>
+            キャンセル
+          </button>
         </div>
-        <div>
-          <label htmlFor="species">種類（必須）</label>
-          <select
-            id="species"
-            value={species}
-            onChange={(e) => setSpecies(e.target.value)}
-            required
-          >
-            <option value="">選択してください</option>
-            <option value="犬">犬</option>
-            <option value="猫">猫</option>
-            <option value="その他">その他</option>
-          </select>
-        </div>
-        <div>
-          <label htmlFor="birthday">生年月日（任意）</label>
-          <input
-            id="birthday"
-            type="date"
-            value={birthday}
-            onChange={(e) => setBirthday(e.target.value)}
-          />
-        </div>
-      </div>{" "}
-      {/* pet-form-box を閉じる */}
-      <div>
-        <button type="button" onClick={handleSave}>
-          保存
-        </button>
-        <button type="button" onClick={onCancel}>
-          キャンセル
-        </button>
-      </div>
+      </main>
     </div>
   );
 }
