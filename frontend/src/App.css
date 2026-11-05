@@ -187,6 +187,11 @@
   max-width: 400px;
   margin: 60px auto;
   padding: 20px;
+  /* background-color: #fffdf0; */
+}
+
+body {
+  background-color: #fffdf0;
 }
 
 .login-page form {
@@ -294,4 +299,56 @@
 .pet-record-page section:nth-of-type(2) h3 {
   color: #399ed8;
   font-size: 23px;
+}
+
+/* ペット情報の登録・編集画面 */
+.pet-form-page {
+  min-height: 100vh;
+  background-color: #fffdf0;
+  text-align: center;
+  padding: 30px 20px;
+  box-sizing: border-box;
+}
+
+.pet-form-page h1 {
+  color: #399ed8;
+  font-size: 32px;
+  margin-bottom: 24px;
+}
+
+.pet-form-page input,
+.pet-form-page select {
+  background-color: white;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 8px;
+  margin: 6px;
+}
+
+.pet-form-page button {
+  background-color: #d5edfa;
+  color: #333;
+  border: 1px solid #399ed8;
+  border-radius: 5px;
+  padding: 10px 24px;
+  margin: 8px 5px;
+  cursor: pointer;
+}
+
+.pet-form-page button:hover {
+  background-color: #b9e1f6;
+}
+
+/* ペット情報入力フォーム */
+.pet-form-box {
+  background-color: #ffffff;
+  border: 1px solid #b9e1f6;
+  border-radius: 8px;
+  max-width: 450px;
+  margin: 20px auto;
+  padding: 25px;
+}
+
+.pet-form-box > div {
+  margin-bottom: 15px;
 }

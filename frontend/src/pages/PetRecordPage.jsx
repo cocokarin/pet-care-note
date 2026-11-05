@@ -57,7 +57,7 @@ function PetRecordPage({ onLogout, onEditPet, onAddRecord, onEditRecord }) {
           <p>種類：{pet ? pet.species : "未登録"}</p>
           <p>生年月日：{pet ? pet.birthday : "未登録"}</p>
         </div>
-        <button type="button" onClick={onEditPet}>
+        <button type="button" onClick={() => onEditPet(pet)}>
           ペット情報を編集する
         </button>
       </section>
